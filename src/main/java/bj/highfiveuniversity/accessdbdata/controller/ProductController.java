@@ -26,6 +26,12 @@ public class ProductController {
         return productRepository.findAll();
     }
 
+    @GetMapping("/{id}")
+    public Product getOneProduct(@PathVariable Long id) {
+        Product product = productRepository.findById(id).orElseThrow();
+        return product;
+    }
+
     @PostMapping
     public Product createProduct(@RequestBody Product product) {
         return productRepository.save(product);
@@ -33,8 +39,7 @@ public class ProductController {
 
     @PutMapping("/{id}")
     public Product updateProduct(@PathVariable Long id, @RequestBody Product productUpdated) {
-        Product product = productRepository.findById(id).orElseThrow(); // orElseThrow() capture une erreur si la
-                                                                        // ressource n'est pas trouvée
+        Product product = productRepository.findById(id).orElseThrow(); // orElseThrow() capture une erreur si la ressource n'est pas trouvée
         product.setName(productUpdated.getName());
         product.setPrice(productUpdated.getPrice());
         return product;
